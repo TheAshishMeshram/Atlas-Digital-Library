@@ -2,10 +2,6 @@
 
 A modern and responsive digital library website built to organize, search, and explore books online with a clean UI/UX experience. This project provides users with an interactive platform to browse book collections, search for titles, and manage digital learning resources efficiently.
 
-## 🚀 Live Demo
-
-🌐 [Atlas Digital Library](https://github.com/TheAshishMeshram/Atlas-Digital-Library)
-
 ## 📌 Features
 
 * 📚 Interactive digital book collection
