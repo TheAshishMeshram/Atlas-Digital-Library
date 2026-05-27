@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas Portal | Premium Student Digital Library</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="top-gold-strip"></div>
+    <div class="gold-loading-bar" id="gold-loading-bar"></div>
+    <div class="app-container">
+
+        <!-- Sidebar Navigation -->
+        <aside>
+            <div class="logo-container">
+                <img src="/static/images/lib-logo.png" alt="Atlas Logo" class="logo-img"
+                    onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23C5A059%22/><text x=%2250%22 y=%2257%22 font-size=%2228%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22serif%22 font-weight=%22bold%22>AL</text></svg>'">
+                <div class="logo-text"><span>ATLAS LIBRARY</span></div>
+            </div>
+
+            <nav>
+                <div class="nav-title">Categories</div>
+                <ul class="category-list" id="category-list">
+                    <!-- Categories dynamically generated here -->
+                </ul>
+            </nav>
+
+            <div id="sidebar-card-container" style="margin-top: 1.5rem; padding: 0 1rem;"></div>
+
+            <div class="sidebar-footer">
+                <button class="admin-login-btn" id="admin-login-btn" aria-label="Admin Login">
+                    <i class="fas fa-user-shield" id="admin-icon"></i>
+                    <span id="admin-text">Admin Login</span>
+                </button>
+                <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle light and dark mode">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                    <span id="theme-text">Dark Mode</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard View -->
+        <main>
+            <!-- Top Horizontal Navigation Tabs -->
+            <div class="main-nav-tabs">
+                <div class="left-tabs">
+                    <button class="nav-tab active" data-target="home-view" id="tab-home">
+                        <i class="fas fa-home"></i> <span>Home</span>
+                    </button>
+                    <button class="nav-tab" data-target="about-view" id="tab-about">
+                        <i class="fas fa-info-circle"></i> <span>About</span>
+                    </button>
+                    <button class="nav-tab" data-target="policy-view" id="tab-policy">
+                        <i class="fas fa-balance-scale"></i> <span>Policy</span>
+                    </button>
+                </div>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <button class="nav-tab" id="student-login-tab"
+                        style="border: 1.5px solid var(--border-color); background-color: var(--bg-card); font-weight: 600; padding: 0.4rem 1rem;">
+                        <i class="fas fa-user-circle"></i> <span id="student-login-text">Student Login</span>
+                    </button>
+                    <div class="lang-dropdown-container">
+                        <button class="nav-tab" id="language-tab" aria-haspopup="true">
+                            <i class="fas fa-language"></i> <span id="current-lang-text">English</span> <i
+                                class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 2px;"></i>
+                        </button>
+                        <div class="lang-dropdown-menu" id="lang-dropdown-menu">
+                            <button class="lang-option active" data-lang="en">English (US)</button>
+                            <button class="lang-option" data-lang="es">Español</button>
+                            <button class="lang-option" data-lang="fr">Français</button>
+                            <button class="lang-option" data-lang="hi">हिन्दी</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Home View Container -->
+            <div id="home-view" class="view-content active">
+                <!-- Header Section -->
+                <header>
+                    <div class="header-title-area">
+                        <h1 id="brand-title">Welcome to Atlas Library!</h1>
+                        <p id="brand-subtitle">Curated collections of literature, science, and design for academic
+                            excellence.</p>
+                    </div>
+
+                    <!-- Search Bar -->
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                        <input type="text" id="search-input" class="search-input"
+                            placeholder="Search by title, author, or description..." aria-label="Search books">
+                    </div>
+                </header>
+
+                <!-- Library Banner Poster -->
+                <div class="library-hero-poster">
+                    <img src="/static/images/library_banner.png" alt="Atlas Library Premium Showcase"
+                        class="hero-poster-img">
+                    <div class="hero-poster-overlay">
+                        <h2 id="poster-title-lbl">Atlas Master Collection</h2>
+                        <p id="poster-desc-lbl">Explore thousands of rare publications, academic reserves, and
+                            historical records designed for deep focus.</p>
+                    </div>
+                </div>
+
+                <!-- Featured Masterpieces Automatic Sliding Showcase -->
+                <section class="featured-showcase">
+                    <h2 class="section-title" id="featured-title-lbl"><i class="fas fa-star"
+                            style="color: var(--gold-primary);"></i> Featured Masterpieces</h2>
+                    <div class="carousel-container">
+                        <div class="carousel-track" id="carousel-track">
+                            <!-- Sliding book cards dynamically generated here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Library Statistics Grid -->
+                <section class="stats-grid" aria-label="Library stats">
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper">
+                            <i class="fas fa-book-open" aria-hidden="true"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="stats-total-lbl">Total Copies</h3>
+                            <span class="stat-value" id="stats-total">0</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper">
+                            <i class="fas fa-check-circle" aria-hidden="true"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="stats-avail-lbl">Available</h3>
+                            <span class="stat-value" id="stats-available">0</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper">
+                            <i class="fas fa-bookmark" aria-hidden="true"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="stats-issued-lbl">Issued</h3>
+                            <span class="stat-value" id="stats-issued">0</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card" style="border-color: rgba(166, 110, 78, 0.3);">
+                        <div class="stat-icon-wrapper"
+                            style="background: rgba(166, 110, 78, 0.1); color: var(--status-issued);">
+                            <i class="fas fa-clock" aria-hidden="true"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="stats-overdue-lbl">Overdue</h3>
+                            <span class="stat-value" id="stats-overdue" style="color: var(--status-issued);">0</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Books Section -->
+                <section aria-label="Book collection">
+                    <div class="section-header">
+                        <h2 class="section-title" id="catalogs-title-lbl">Catalogs</h2>
+                        <div style="display: flex; gap: 12px; align-items: center;">
+                            <button class="shelf-toggle-btn admin-only" id="add-book-btn"
+                                style="display: none; background: var(--gold-gradient);">
+                                <i class="fas fa-plus" aria-hidden="true"></i> <span id="add-book-lbl">Add Book</span>
+                            </button>
+                            <button class="shelf-toggle-btn" id="open-shelf-btn">
+                                <i class="fas fa-bookmark" aria-hidden="true"></i> <span id="myshelf-lbl">My Shelf /
+                                    History</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="book-grid" id="book-grid">
+                        <!-- Book cards dynamically generated here -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- About View Container -->
+            <div id="about-view" class="view-content" style="display: none;">
+                <header>
+                    <div class="header-title-area">
+                        <h1 id="about-title-lbl">About Atlas Library</h1>
+                        <p id="about-subtitle-lbl">A sanctuary of knowledge, science, and human ingenuity.</p>
+                    </div>
+                </header>
+
+                <div class="about-container">
+                    <div class="about-hero">
+                        <p id="about-p1-lbl">Welcome to the Atlas Library Portal. Established as a curated space for
+                            researchers, students, and craftsmen, our repository hosts key seminal works spanning
+                            physics, mathematical principles, cognitively excellent designs, and classical literature.
+                        </p>
+                        <p id="about-p2-lbl">We believe that a library is more than a storage of files; it is a dynamic
+                            catalyst for intellectual growth. Through our digital gateway, we present a fluid,
+                            beautifully balanced interface that makes acquiring and returning volumes effortless.</p>
+                    </div>
+
+                    <div class="about-grid">
+                        <div class="about-card">
+                            <div class="about-card-icon"><i class="fas fa-gem"></i></div>
+                            <h3 id="about-card1-title">Curated Excellence</h3>
+                            <p id="about-card1-desc">Seminal publications span high-impact domains like Agile Software
+                                Engineering, Industrial Design, Corporate Strategy, and Philosophy.</p>
+                        </div>
+                        <div class="about-card">
+                            <div class="about-card-icon"><i class="fas fa-bolt"></i></div>
+                            <h3 id="about-card2-title">Dynamic Operations</h3>
+                            <p id="about-card2-desc">Real-time status tracking, instant borrowing workflows, personal
+                                activity logs, and secure student digital cards.</p>
+                        </div>
+                        <div class="about-card">
+                            <div class="about-card-icon"><i class="fas fa-feather-alt"></i></div>
+                            <h3 id="about-card3-title">Stunning Aesthetics</h3>
+                            <p id="about-card3-desc">Crafted under visual balance frameworks utilizing harmonized
+                                charcoal shades, warm light-wood modes, and glowing gold accents.</p>
+                        </div>
+                    </div>
+
+                    <blockquote class="about-quote">
+                        <p id="about-quote-txt">"Books are a uniquely portable magic."</p>
+                        <cite>— Stephen King</cite>
+                    </blockquote>
+                </div>
+            </div>
+
+            <!-- Policy View Container -->
+            <div id="policy-view" class="view-content" style="display: none;">
+                <header>
+                    <div class="header-title-area">
+                        <h1 id="policy-title-lbl">Library Policies</h1>
+                        <p id="policy-subtitle-lbl">Stewardship guidelines for a balanced academic community.</p>
+                    </div>
+                </header>
+
+                <div class="policy-container">
+                    <div class="policy-grid">
+                        <div class="policy-card">
+                            <div class="policy-icon-wrapper"><i class="fas fa-copy"></i></div>
+                            <div class="policy-details">
+                                <h3 id="policy-rule1-title">Borrowing Limit</h3>
+                                <p id="policy-rule1-desc">Students can borrow up to three (3) books at any given time.
+                                    Active issues are tracked under the personal shelf drawer.</p>
+                            </div>
+                        </div>
+                        <div class="policy-card">
+                            <div class="policy-icon-wrapper"><i class="fas fa-hourglass-half"></i></div>
+                            <div class="policy-details">
+                                <h3 id="policy-rule2-title">Loan Duration</h3>
+                                <p id="policy-rule2-desc">Standard student checkout duration is seven (7) calendar days.
+                                    Extended renewals are subject to reservation queues.</p>
+                            </div>
+                        </div>
+                        <div class="policy-card">
+                            <div class="policy-icon-wrapper"><i class="fas fa-sync-alt"></i></div>
+                            <div class="policy-details">
+                                <h3 id="policy-rule3-title">Renewal Requests</h3>
+                                <p id="policy-rule3-desc">Books can be renewed once if no active reservation exists from
+                                    other scholars. Request renewal prior to due date.</p>
+                            </div>
+                        </div>
+                        <div class="policy-card">
+                            <div class="policy-icon-wrapper"><i class="fas fa-exclamation-triangle"></i></div>
+                            <div class="policy-details">
+                                <h3 id="policy-rule4-title">Overdue Penalties</h3>
+                                <p id="policy-rule4-desc">Failure to return materials results in temporary borrowing
+                                    suspensions. Alerts are sent directly to student email accounts.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Dashboard View Container -->
+            <div id="admin-dashboard-view" class="view-content" style="display: none;">
+                <header>
+                    <div class="header-title-area">
+                        <h1 id="admin-dashboard-title">Administrator Dashboard</h1>
+                        <p id="admin-dashboard-subtitle">Real-time overall analysis, card approvals, and library catalog
+                            logistics.</p>
+                    </div>
+                </header>
+
+                <!-- Circular Progress Bars overall analysis -->
+                <div class="analysis-circular-container">
+                    <div class="circular-progress-card">
+                        <div class="progress-circle">
+                            <svg class="circle-svg" viewBox="0 0 100 100">
+                                <circle class="circle-bg" cx="50" cy="50" r="40"></circle>
+                                <circle class="circle-bar" id="circle-bar-apps" cx="50" cy="50" r="40"></circle>
+                            </svg>
+                            <div class="circle-value" id="circle-val-apps">0%</div>
+                        </div>
+                        <div class="progress-info">
+                            <h4 id="admin-card-apps-lbl">Card Applications</h4>
+                            <p id="progress-apps-desc">Approved applications ratio</p>
+                        </div>
+                    </div>
+
+                    <div class="circular-progress-card">
+                        <div class="progress-circle">
+                            <svg class="circle-svg" viewBox="0 0 100 100">
+                                <circle class="circle-bg" cx="50" cy="50" r="40"></circle>
+                                <circle class="circle-bar" id="circle-bar-issued" cx="50" cy="50" r="40"></circle>
+                            </svg>
+                            <div class="circle-value" id="circle-val-issued">0%</div>
+                        </div>
+                        <div class="progress-info">
+                            <h4 id="admin-issued-books-lbl">Issued Books</h4>
+                            <p id="progress-issued-desc">Of total inventory copies</p>
+                        </div>
+                    </div>
+
+                    <div class="circular-progress-card">
+                        <div class="progress-circle">
+                            <svg class="circle-svg" viewBox="0 0 100 100">
+                                <circle class="circle-bg" cx="50" cy="50" r="40"></circle>
+                                <circle class="circle-bar" id="circle-bar-remain" cx="50" cy="50" r="40"></circle>
+                            </svg>
+                            <div class="circle-value" id="circle-val-remain">0%</div>
+                        </div>
+                        <div class="progress-info">
+                            <h4 id="admin-remain-books-lbl">Remaining Books</h4>
+                            <p id="progress-remain-desc">Available for checkouts</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Main Panels: Requests & Book Management side by side! -->
+                <div class="admin-panels-grid">
+                    <div class="admin-panel-card">
+                        <h3 id="admin-card-reqs-lbl"><i class="fas fa-id-card"
+                                style="color: var(--gold-primary); margin-right: 8px;"></i> Student Card Requests</h3>
+                        <div id="admin-card-requests-list" class="admin-list-container" style="margin-top: 1rem;">
+                            <!-- Card requests load here -->
+                        </div>
+                    </div>
+
+                    <div class="admin-panel-card">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3 id="admin-books-lbl"><i class="fas fa-book"
+                                    style="color: var(--gold-primary); margin-right: 8px;"></i> Manage Books</h3>
+                            <button class="btn-primary" id="admin-add-book-trigger"
+                                style="font-size: 0.8rem; padding: 6px 14px;">
+                                <i class="fas fa-plus"></i> <span id="admin-add-book-lbl">Add Book</span>
+                            </button>
+                        </div>
+                        <div id="admin-books-list" class="admin-list-container">
+                            <!-- Book management load here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Complete Transaction & Borrowing History (Full Width) -->
+                <div class="admin-panel-card" style="margin-top: 2.5rem; margin-bottom: 2rem;">
+                    <h3 id="admin-history-lbl"><i class="fas fa-history"
+                            style="color: var(--gold-primary); margin-right: 8px;"></i> Complete Transaction & Activity
+                        Logs</h3>
+                    <div id="admin-history-list" class="admin-list-container"
+                        style="margin-top: 1.5rem; height: 350px;">
+                        <!-- Complete issue & return log loads here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- My Shelf Sidebar Drawer Slider -->
+        <div class="shelf-drawer" id="shelf-drawer">
+            <div class="shelf-header">
+                <h2 class="shelf-title">My Shelf & Activity</h2>
+                <button class="shelf-close-btn" id="close-shelf-btn" aria-label="Close shelf">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <div class="shelf-tabs">
+                <button class="shelf-tab active" id="tab-active-shelf">Active Issues</button>
+                <button class="shelf-tab" id="tab-history">Activity Log</button>
+                <button class="shelf-tab admin-only" id="tab-card-applications" style="display: none;">Card
+                    Requests</button>
+            </div>
+
+            <!-- Active Issues Pane -->
+            <div class="shelf-content-pane active" id="pane-active-shelf">
+                <ul class="shelf-list" id="active-shelf-list">
+                    <!-- Active issues dynamically generated here -->
+                </ul>
+            </div>
+
+            <!-- History Log Pane -->
+            <div class="shelf-content-pane" id="pane-history">
+                <div id="history-list">
+                    <!-- History transactions dynamically generated here -->
+                </div>
+            </div>
+
+            <!-- Card Applications Pane (Admin Only) -->
+            <div class="shelf-content-pane" id="pane-card-applications">
+                <ul class="shelf-list" id="card-applications-list">
+                    <!-- Pending card requests dynamically generated here -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Issue Book Modal Dialog -->
+        <div class="modal-overlay" id="issue-modal">
+            <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+                <button class="modal-close-btn" id="close-modal-btn" aria-label="Close modal">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+
+                <h2 class="modal-title" id="modal-title">Borrow Book Request</h2>
+
+                <!-- Book summary in modal -->
+                <div class="modal-book-detail">
+                    <img src="" alt="Book Cover" class="modal-book-cover" id="modal-book-cover"
+                        onerror="this.style.display='none'">
+                    <div class="modal-book-info">
+                        <h3 id="modal-book-title" style="font-size: 1.1rem;">Book Title</h3>
+                        <p id="modal-book-author">By Author Name</p>
+                        <p id="modal-book-category"
+                            style="font-size: 0.8rem; font-weight: 700; color: var(--gold-primary); text-transform: uppercase; margin-top: 4px;">
+                            CATEGORY</p>
+                    </div>
+                </div>
+
+                <!-- Borrow Form -->
+                <form id="issue-form">
+                    <input type="hidden" id="modal-book-id">
+
+                    <div class="form-group">
+                        <label for="student-name" class="form-label">Borrower Full Name</label>
+                        <input type="text" id="student-name" class="form-input" placeholder="e.g. John Doe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="student-id" class="form-label">Student ID Card Number</label>
+                        <input type="text" id="student-id" class="form-input" placeholder="e.g. STU-2026-987" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="duration-days" class="form-label">Issue Duration</label>
+                        <select id="duration-days" class="form-select">
+                            <option value="7">7 Days (Standard)</option>
+                            <option value="14">14 Days (Extended)</option>
+                            <option value="30">30 Days (Faculty / Research)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancel-modal-btn">Cancel</button>
+                        <button type="submit" class="btn-primary">Confirm Issue</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Admin Login Modal Dialog -->
+        <div class="modal-overlay" id="admin-login-modal">
+            <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="admin-modal-title">
+                <button class="modal-close-btn" id="close-admin-modal-btn" aria-label="Close modal">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+
+                <h2 class="modal-title" id="admin-modal-title">Admin Portal Secure Access</h2>
+
+                <form id="admin-login-form">
+                    <div class="form-group">
+                        <label for="admin-username" class="form-label">Username</label>
+                        <input type="text" id="admin-username" class="form-input" placeholder="Enter username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="admin-password" class="form-label">Password</label>
+                        <input type="password" id="admin-password" class="form-input" placeholder="Enter password"
+                            required>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancel-admin-modal-btn">Cancel</button>
+                        <button type="submit" class="btn-primary">Secure Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Book Modal Dialog -->
+        <div class="modal-overlay" id="add-book-modal">
+            <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="add-book-title">
+                <button class="modal-close-btn" id="close-add-book-btn" aria-label="Close modal">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+
+                <h2 class="modal-title" id="add-book-title">Add New Catalog Book</h2>
+
+                <form id="add-book-form">
+                    <div class="form-group">
+                        <label for="book-title-input" class="form-label">Title</label>
+                        <input type="text" id="book-title-input" class="form-input" placeholder="e.g. The Golden Ratio"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="book-author-input" class="form-label">Author</label>
+                        <input type="text" id="book-author-input" class="form-input" placeholder="e.g. Mario Livio"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="book-category-input" class="form-label">Category</label>
+                        <select id="book-category-input" class="form-select" required>
+                            <option value="Science & Tech">Science & Tech</option>
+                            <option value="Design">Design</option>
+                            <option value="Business">Business</option>
+                            <option value="History">History</option>
+                            <option value="Fiction">Fiction</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="book-description-input" class="form-label">Description</label>
+                        <textarea id="book-description-input" class="form-input"
+                            style="height: 100px; resize: vertical;"
+                            placeholder="Provide a brief summary of the book..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="book-copies-input" class="form-label">Total Copies</label>
+                        <input type="number" id="book-copies-input" class="form-input" value="3" min="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="book-cover-input" class="form-label">Cover Image URL / Path (Optional)</label>
+                        <input type="text" id="book-cover-input" class="form-input"
+                            placeholder="e.g. /static/images/custom_book.png">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancel-add-book-btn">Cancel</button>
+                        <button type="submit" class="btn-primary">Add Book</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Card Application Modal Dialog -->
+        <div class="modal-overlay" id="card-apply-modal">
+            <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="card-apply-title">
+                <button class="modal-close-btn" id="close-card-apply-btn" aria-label="Close modal">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+
+                <h2 class="modal-title" id="card-apply-title">Apply for Digital Library Card</h2>
+
+                <form id="card-apply-form">
+                    <div class="form-group">
+                        <label for="apply-student-name" class="form-label">Full Name</label>
+                        <input type="text" id="apply-student-name" class="form-input" placeholder="e.g. John Doe"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="apply-student-id" class="form-label">Student ID Number</label>
+                        <input type="text" id="apply-student-id" class="form-input" placeholder="e.g. STU-2026-987"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="apply-student-email" class="form-label">Student Email Address</label>
+                        <input type="email" id="apply-student-email" class="form-input"
+                            placeholder="e.g. john.doe@university.edu" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="apply-student-dept" class="form-label">Academic Department</label>
+                        <select id="apply-student-dept" class="form-select" required>
+                            <option value="Computer Science">Computer Science & Tech</option>
+                            <option value="Industrial Design">Industrial Design</option>
+                            <option value="Business Administration">Business Administration</option>
+                            <option value="Modern History">Modern History</option>
+                            <option value="English Literature">English Literature</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancel-card-apply-btn">Cancel</button>
+                        <button type="submit" class="btn-primary">Submit Application</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Student Login Modal Dialog -->
+        <div class="modal-overlay" id="student-login-modal">
+            <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="student-modal-title">
+                <button class="modal-close-btn" id="close-student-modal-btn" aria-label="Close modal">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+
+                <h2 class="modal-title" id="student-modal-title">Student Portal Login</h2>
+
+                <form id="student-login-form">
+                    <div class="form-group">
+                        <label for="student-username-input" class="form-label">Full Name</label>
+                        <input type="text" id="student-username-input" class="form-input" placeholder="e.g. Jane Doe"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="student-id-input" class="form-label">Student ID Card Number</label>
+                        <input type="text" id="student-id-input" class="form-input" placeholder="e.g. STU-2026-888"
+                            required>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancel-student-modal-btn">Cancel</button>
+                        <button type="submit" class="btn-primary">Student Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Main JS logic -->
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>
